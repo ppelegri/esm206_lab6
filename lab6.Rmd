@@ -38,7 +38,71 @@ Try a t-test
 t.test(gp_1, gp_2)
 ```
 
-This p-value means that if these two random samples were drawn from populations with the same sample mean, there is a probability of 19.8% that we would take two random samples that have means at least as different as the sample means we found by random chance.
+This p-value means that if these two random samples were drawn from populations with the same mean, there is a probability of 19.8% that we would take two random samples that have means at least as different as the sample means we found by random chance.
 
 As a result we would retain (fail to reject) the null hypothesis. (People get weirdly upset if you say "accept" the null.) There is no significant difference in means between group 1 and group 2.
+
+Now let's compare this outcome to a rank-based test
+
+## Mann Whitney U unpaired rank-based test
+
+```{r}
+mwu <- wilcox.test(gp_1, gp_2)
+
+mwu
+```
+
+This p-value means that if these two random samples were drawn from populations with the same ranks, there is a 28.8% chance that, by random chance, we would take two random samples that have ranks at least different as the sample ranks we found.
+
+If these samples were drawn from populations with the same ranks (medians), the probability of finding two samples with ranks as least as different as those in our samples is 28%.
+
+There is no significatn different in ranks between group 1 and group 2.
+
+Median scores for group 1 (M = 14) and group 2 (M = 12) did not differ significantly (Mann Whitney U test: U(df) = 86, p = 0.28)
+
+**Important note** when you decide what is an appropriate test to use, you apply that consistently. e.g. don't talk about medians at one point then use a t-test (which compares means)
+
+## Linear regression
+
+Simple linear regression (single dependent variable, a single independent variable)
+
+```{r}
+# Make an exploratory plot of penguin body mass (y-axis) versus flipper length (x-axis)
+
+ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point() +
+  geom_smooth(method = "lm") # add linear trend line - dangerous! calculated using ordinary least squares
+```
+
+Find a linear regression model using ordinary least squares describing the relationship between flipper length and body mass for these penguins.
+
+3 pieces:
+
+- What type of model?
+- What is the relationship to model (DV - IV(s))
+- Where is the data that's used to create this model?
+
+```{r}
+penguin_lm <- lm(body_mass_g ~ flipper_length_mm, data = penguins)
+
+penguin_lm
+```
+
+To look up coefficients use `penguin_lm$coefficients`. If you just wanted the slope, you could look up `penguin_lm$coefficients[2]`
+
+## broom package returns model outputs as tidy data frames
+
+```{r}
+penguin_lm_tidy <- broom::tidy(penguin_lm)
+
+penguin_lm_tidy
+
+broom::glance(penguin_lm) # gives you model-wide indicators of fit and uncertainty in a tidy data frame
+```
+
+How can I actually include my model equation in a report?
+
+```{r}
+extract_eq( model = penguin_lm, use_coefs = FALSE) # use_coefs = TRUE uses actual coefficients that were calculated; use_coefs = FALSE uses generic coefficients
+```
 
