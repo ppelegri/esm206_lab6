@@ -104,5 +104,12 @@ How can I actually include my model equation in a report?
 
 ```{r}
 extract_eq( model = penguin_lm, use_coefs = FALSE) # use_coefs = TRUE uses actual coefficients that were calculated; use_coefs = FALSE uses generic coefficients
+
+plot(penguin_lm) # generate four types of plots to explore spread (and distribution) of residuals
+
+# what we are actually interested in what diagnosing our model is about the spread and distribution of residuals
 ```
 
+Residuals vs. leverage: are there any points that appear to be having more weight on the model output than other points? Are there any points outside of that red dashed line. (If you think a point isn't representative of the population you're studying, you may consider removing it).
+1st and 3rd: is variance of residuals consistent throughout the model? Measurement of heterskedasticity
+2nd (Q-Q): are the residuals normally distributed?
