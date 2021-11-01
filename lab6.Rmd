@@ -1,0 +1,34 @@
+---
+title: "Lab 6"
+author: "Patrick Pelegri-O'Day"
+date: "11/1/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library (tidyverse)
+library(palmerpenguins)
+library(broom)
+library(equatiomatic)
+```
+
+## Example of a rank-based test
+
+We'll make our own samples, using a pseudorandom generator.
+
+```{r}
+set.seed(1414) # psuedorandom generator - everyone who uses this code will have the same random sample
+gp_1 <- sample.int(20, size = 15, replace = TRUE) # gives a range from 0 to 20, sample size = 15, once the value of an observation is used, that number gets put back in the possible pool of numbers that can be chosen from, so a number can be used multiple times
+
+set.seed(1424)
+gp_2 <- sample.int(30, size = 15, replace = TRUE)
+```
+
+```{r}
+hist(gp_1)
+
+hist(gp_2)
+```
+
