@@ -32,3 +32,13 @@ hist(gp_1)
 hist(gp_2)
 ```
 
+Try a t-test
+
+```{r}
+t.test(gp_1, gp_2)
+```
+
+This p-value means that if these two random samples were drawn from populations with the same sample mean, there is a probability of 19.8% that we would take two random samples that have means at least as different as the sample means we found by random chance.
+
+As a result we would retain (fail to reject) the null hypothesis. (People get weirdly upset if you say "accept" the null.) There is no significant difference in means between group 1 and group 2.
+
